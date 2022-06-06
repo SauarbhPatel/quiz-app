@@ -44,11 +44,20 @@ const questions = [
 function App() {
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
+  const [wrong, setWrong] = useState(0);
+  const [points, setPoints] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   function handleAnswer(isCorrect) {
     if (isCorrect) {
       setScore(score + 1);
+      console.log(score);
+      setPoints(points +5)
+    }
+    else{
+      setWrong(wrong + 1);
+      setPoints(points -4)
+
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -61,12 +70,30 @@ function App() {
 
   return (
     <div className="app">
+            <div className="result-section">
+            <div className="right-answer">
+              <h4>Right Ans</h4>
+              <span style={{"--q":`${questions.length}`,"--a":`${score}`,"--c":"green"}}></span>
+            </div>
+            <div className="wrong-answer">
+              <h4>Wrong Ans</h4>
+              <span style={{"--q":`${questions.length}`,"--a":`${wrong}`,"--c":"red"}}></span>
+
+            </div>
+            <div className="score">
+              <h4>Points</h4>
+              <span>{points}</span>
+            </div>
+          </div>
       {showScore ? (
+      
         <div className="score-section">
+          
           Você pontuou {score} de {questions.length}
         </div>
       ) : (
         <>
+    
           <div className="question-section">
             <div className="question-count">
               <span>Questão {currentQuestion + 1}</span>/{questions.length}
